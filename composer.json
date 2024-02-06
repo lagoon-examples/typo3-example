@@ -1,0 +1,11 @@
+{
+    "require": {
+        "typo3/cms-base-distribution": "v12.4.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
+        }
+    }
+}
