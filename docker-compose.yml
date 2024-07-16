@@ -6,8 +6,9 @@ x-volumes:
   &default-volumes
     # Define all volumes you would like to have real-time mounted into the docker containers
     volumes:
-      - ./public:/app/public:delegated 
-      - ./config:/app/config:delegated 
+       - ./public:/app/public:delegated
+       - ./config:/app/config:delegated
+      # - ./:/app:delegated
 
 x-environment:
   &default-environment
@@ -83,7 +84,7 @@ services:
 
 
   mariadb:
-    image: uselagoon/mariadb-10.6:latest
+    image: uselagoon/mariadb-10.11:latest
     labels:
       lagoon.type: mariadb
       lando.type: mariadb
@@ -93,6 +94,15 @@ services:
       << : *default-environment
     volumes:
       - db:/var/lib/mysql
+
+  lagoonlogs:
+    hostname: application-logs.lagoon.svc
+    image: mendhak/udp-listener
+    environment:
+    - UDPPORT=5140
+    ports:
+    - "0.0.0.0:5140:5140"
+    - "0.0.0.0:5140:5140/udp"
 
 networks:
   amazeeio-network:
