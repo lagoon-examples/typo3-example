@@ -98,6 +98,8 @@ services:
   lagoonlogs:
     hostname: application-logs.lagoon.svc
     image: mendhak/udp-listener
+    labels:
+      lagoon.type: none
     environment:
     - UDPPORT=5140
     ports:
