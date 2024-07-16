@@ -10,7 +10,7 @@ if(getenv("LAGOON") !== false) {
     $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = getenv('MARIADB_DATABASE') ?: 'lagoon';
     $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host'] = getenv('MARIADB_HOST') ?: 'mariadb';
     $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = getenv('MARIADB_PASSWORD') ?: 'lagoon';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'] = getenv('MARIADB_USER') ?: 'lagoon';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'] = getenv('MARIADB_USERNAME') ?: 'lagoon';
 
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['displayErrors'] = '1';
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['sqlDebug'] = '1';
