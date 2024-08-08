@@ -33,6 +33,9 @@ volumes:
   var:
     labels:
       lagoon.type: persistent
+  conf:
+    labels:
+      lagoon.type: persistent
 
 services:
 
@@ -47,6 +50,7 @@ services:
       lagoon.volumes.assets.path: /app/public/_assets/
       lagoon.volumes.fileadmin.path: /app/public/fileadmin/
       lagoon.volumes.var.path: /app/public/var/
+      lagoon.volumes.conf.path: /app/public/typo3conf/
       lando.type: php-cli
     << : *default-volumes # loads the defined volumes from the top
     volumes_from: ### mount the ssh-agent from the pygmy or cachalot ssh-agent. Automatically removed in CI.
@@ -65,6 +69,7 @@ services:
       lagoon.volumes.assets.path: /app/public/_assets/
       lagoon.volumes.fileadmin.path: /app/public/fileadmin/
       lagoon.volumes.var.path: /app/public/var/
+      lagoon.volumes.conf.path: /app/public/typo3conf/
       lando.type: nginx  
     ports:
       - "8080"
@@ -89,6 +94,7 @@ services:
       lagoon.volumes.assets.path: /app/public/_assets/
       lagoon.volumes.fileadmin.path: /app/public/fileadmin/
       lagoon.volumes.var.path: /app/public/var/
+      lagoon.volumes.conf.path: /app/public/typo3conf/
       lando.type: php-fpm
     << : *default-volumes
     depends_on:
