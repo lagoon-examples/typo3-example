@@ -2,7 +2,6 @@
 return [
     'BE' => [
         'debug' => false,
-        'installToolPassword' => '$argon2i$v=19$m=65536,t=16,p=1$R2MzVEF4STJwRDZHZDJlZA$lxc5maElIB2zi19I9jVseIecNkzot4EaZIfgmPkoWXQ',
         'passwordHashing' => [
             'className' => 'TYPO3\\CMS\\Core\\Crypto\\PasswordHashing\\Argon2iPasswordHash',
             'options' => [],
@@ -11,17 +10,8 @@ return [
     'DB' => [
         'Connections' => [
             'Default' => [
-                'charset' => 'utf8mb4',
-                'dbname' => 'lagoon',
-                'driver' => 'pdo_mysql',
-                'host' => 'mariadb',
-                'password' => 'lagoon',
-                'port' => 3306,
-                'tableoptions' => [
-                    'charset' => 'utf8mb4',
-                    'collate' => 'utf8mb4_unicode_ci',
-                ],
-                'user' => 'lagoon',
+                'charset' => 'utf8',
+                'driver' => 'mysqli',
             ],
         ],
     ],
@@ -41,7 +31,11 @@ return [
         ],
     ],
     'FE' => [
+        'cacheHash' => [
+            'enforceValidation' => true,
+        ],
         'debug' => false,
+        'disableNoCacheParameter' => true,
         'passwordHashing' => [
             'className' => 'TYPO3\\CMS\\Core\\Crypto\\PasswordHashing\\Argon2iPasswordHash',
             'options' => [],
@@ -79,6 +73,7 @@ return [
         'transport_smtp_username' => '',
     ],
     'SYS' => [
+        'UTF8filesystem' => true,
         'caching' => [
             'cacheConfigurations' => [
                 'hash' => [
@@ -106,12 +101,12 @@ return [
         ],
         'devIPmask' => '',
         'displayErrors' => 0,
-        'encryptionKey' => '1e1f2abee50a7c310a2df8c2c32be0b9c579023659fba9240945eb978ff49f3d2bbff88ed43702b62a66e2e66d21b88c',
+        'encryptionKey' => '01f5499b4838289592d152d023b954e1c6834c854f34e34fe9daa36e32ddae0df0c407112e35b140db29d3501bc22fe1',
         'exceptionalErrors' => 4096,
-        'sitename' => 'New TYPO3 Project',
-        'systemMaintainers' => [
-            1,
+        'features' => [
+            'security.backend.enforceContentSecurityPolicy' => true,
+            'security.usePasswordPolicyForFrontendUsers' => true,
         ],
-        'trustedHostsPattern' => '.*.*',
+        'sitename' => 'New TYPO3 site',
     ],
 ];
