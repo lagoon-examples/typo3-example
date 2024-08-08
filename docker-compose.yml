@@ -24,8 +24,8 @@ x-environment:
 volumes:
   db:
     {}
-  basic:
-    assets:
+  assets:
+    labels:
       lagoon.type: persistent
   fileadmin:
     labels:
