@@ -24,9 +24,9 @@ x-environment:
 volumes:
   db:
     {}
-  assets:
-    labels:
-      lagoon.type: persistent
+  # assets:
+  #   labels:
+  #     lagoon.type: persistent
   fileadmin:
     labels:
       lagoon.type: persistent
@@ -47,7 +47,7 @@ services:
     labels:
       # Lagoon Labels
       lagoon.type: cli
-      lagoon.volumes.assets.path: /app/public/_assets/
+      # lagoon.volumes.assets.path: /app/public/_assets/
       lagoon.volumes.fileadmin.path: /app/public/fileadmin/
       lagoon.volumes.var.path: /app/public/var/
       lagoon.volumes.conf.path: /app/public/typo3conf/
@@ -66,7 +66,7 @@ services:
         CLI_IMAGE: *lagoon-project # Inject the name of the cli image
     labels:
       lagoon.type: nginx-php
-      lagoon.volumes.assets.path: /app/public/_assets/
+      # lagoon.volumes.assets.path: /app/public/_assets/
       lagoon.volumes.fileadmin.path: /app/public/fileadmin/
       lagoon.volumes.var.path: /app/public/var/
       lagoon.volumes.conf.path: /app/public/typo3conf/
@@ -91,7 +91,7 @@ services:
     labels:
       lagoon.type: nginx-php
       lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon
-      lagoon.volumes.assets.path: /app/public/_assets/
+      # lagoon.volumes.assets.path: /app/public/_assets/
       lagoon.volumes.fileadmin.path: /app/public/fileadmin/
       lagoon.volumes.var.path: /app/public/var/
       lagoon.volumes.conf.path: /app/public/typo3conf/
