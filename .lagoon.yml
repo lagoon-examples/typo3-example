@@ -31,7 +31,18 @@ tasks:
         shell: bash
     - run:
         name: Unlock backend
-        command: vendor/bin/typo3 backend:lock
+        command: vendor/bin/typo3 backend:unlock
         service: cli
         shell: bash
 
+lagoon-sync:
+  mariadb:
+    config:
+      hostname: "${MARIADB_HOST:-mariadb}"
+      username: "${MARIADB_USERNAME:-lagoon}"
+      password: "${MARIADB_PASSWORD:-lagoon}"
+      port: "${MARIADB_PORT:-3306}"
+      database: "${MARIADB_DATABASE:-lagoon}"
+  files:
+    config:
+      sync-directory: "/app/public/fileadmin/user_upload"

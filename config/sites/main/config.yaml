@@ -1,4 +1,4 @@
-base: '%env(LAGOON_ROUTE)%/'
+base: '/'
 errorHandling: {  }
 languages:
   -
