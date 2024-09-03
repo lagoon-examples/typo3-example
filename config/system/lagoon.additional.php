@@ -13,10 +13,13 @@ if(getenv("LAGOON") !== false) {
     $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = getenv('MARIADB_PASSWORD') ?: 'lagoon';
     $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'] = getenv('MARIADB_USERNAME') ?: 'lagoon';
     $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['charset'] = getenv('MARIADB_CHARSET') ?: 'utf8mb4';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['tableoptions']['charset'] = getenv('MARIADB_CHARSET') ?: 'utf8mb4';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['tableoptions']['collate'] = getenv('MARIADB_COLLATION') ?: 'utf8mb4_general_ci';
 
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['displayErrors'] = '1';
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['trustedHostsPattern'] = '.*';
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['sqlDebug'] = '1';
+    $GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromAddress'] = 'noreply@lagoon.sh';
     $GLOBALS['TYPO3_CONF_VARS']['FE']['debug'] = '1';
     $GLOBALS['TYPO3_CONF_VARS']['BE']['debug'] = '1';
 
