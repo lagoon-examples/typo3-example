@@ -15,7 +15,7 @@ if(getenv("LAGOON") !== false) {
     $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = getenv('DATABASE_PASSWORD') ?: 'lagoon';
     $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['charset'] = getenv('DATABASE_CHARSET') ?: 'utf8mb4';
     $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['tableoptions']['charset'] = getenv('DATABASE_CHARSET') ?: 'utf8mb4';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['tableoptions']['collate'] = getenv('DATABASE_COLLATION') ?: 'utf8mb4_general_ci';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['tableoptions']['collate'] = getenv('DATABASE_COLLATION') ?: 'utf8mb4_unicode_ci';
 
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['displayErrors'] = '1';
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['trustedHostsPattern'] = '.*';

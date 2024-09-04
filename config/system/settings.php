@@ -12,6 +12,10 @@ return [
             'Default' => [
                 'charset' => 'utf8mb4',
                 'driver' => 'mysqli',
+                'tableoptions' => [
+                    'charset' => 'utf8mb4',
+                    'collate' => 'utf8mb4_unicode_ci',
+                ],
             ],
         ],
     ],
@@ -101,12 +105,11 @@ return [
         ],
         'devIPmask' => '',
         'displayErrors' => 0,
-        'encryptionKey' => '01f5499b4838289592d152d023b954e1c6834c854f34e34fe9daa36e32ddae0df0c407112e35b140db29d3501bc22fe1',
         'exceptionalErrors' => 4096,
         'features' => [
             'security.backend.enforceContentSecurityPolicy' => true,
             'security.usePasswordPolicyForFrontendUsers' => true,
         ],
-        'sitename' => 'New TYPO3 site',
+        'trustedHostsPattern' => '.*.*',
     ],
 ];
