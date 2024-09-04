@@ -2,6 +2,7 @@
 return [
     'BE' => [
         'debug' => false,
+        'installToolPassword' => '',
         'passwordHashing' => [
             'className' => 'TYPO3\\CMS\\Core\\Crypto\\PasswordHashing\\Argon2iPasswordHash',
             'options' => [],
@@ -35,11 +36,7 @@ return [
         ],
     ],
     'FE' => [
-        'cacheHash' => [
-            'enforceValidation' => true,
-        ],
         'debug' => false,
-        'disableNoCacheParameter' => true,
         'passwordHashing' => [
             'className' => 'TYPO3\\CMS\\Core\\Crypto\\PasswordHashing\\Argon2iPasswordHash',
             'options' => [],
@@ -77,7 +74,6 @@ return [
         'transport_smtp_username' => '',
     ],
     'SYS' => [
-        'UTF8filesystem' => true,
         'caching' => [
             'cacheConfigurations' => [
                 'hash' => [
@@ -105,6 +101,7 @@ return [
         ],
         'devIPmask' => '',
         'displayErrors' => 0,
+        'encryptionKey' => '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
         'exceptionalErrors' => 4096,
         'features' => [
             'security.backend.enforceContentSecurityPolicy' => true,

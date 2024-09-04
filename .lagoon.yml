@@ -11,29 +11,17 @@ tasks:
         shell: bash
     - run:
         name: Update DB
-        command: |
-          if [[ $(vendor/bin/typo3 configuration:showactive SYS/encryptionKey --json) != \"\" ]];
-          then vendor/bin/typo3 database:updateschema "*" --verbose;
-          else echo "no TYPO3 installed yet";
-          fi
+        command: vendor/bin/typo3 database:updateschema "*" --verbose
         service: cli
         shell: bash
     - run:
         name: Cache Flush
-        command: |
-          if [[ $(vendor/bin/typo3 configuration:showactive SYS/encryptionKey --json) != \"\" ]];
-          then vendor/bin/typo3 cache:flush;
-          else echo "no TYPO3 installed yet";
-          fi
+        command: vendor/bin/typo3 cache:flush
         service: cli
         shell: bash
     - run:
         name: Run pending upgrades
-        command: |
-          if [[ $(vendor/bin/typo3 configuration:showactive SYS/encryptionKey --json) != \"\" ]];
-          then vendor/bin/typo3 upgrade:run;
-          else echo "no TYPO3 installed yet";
-          fi
+        command: vendor/bin/typo3 upgrade:run
         service: cli
         shell: bash
     - run:
