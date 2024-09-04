@@ -20,12 +20,20 @@ tasks:
         shell: bash
     - run:
         name: Cache Flush
-        command: vendor/bin/typo3 cache:flush
+        command: |
+          if [[ $(vendor/bin/typo3 configuration:showactive SYS/encryptionKey --json) != \"\" ]];
+          then vendor/bin/typo3 cache:flush;
+          else echo "no TYPO3 installed yet";
+          fi
         service: cli
         shell: bash
     - run:
         name: Run pending upgrades
-        command: vendor/bin/typo3 upgrade:run
+        command: |
+          if [[ $(vendor/bin/typo3 configuration:showactive SYS/encryptionKey --json) != \"\" ]];
+          then vendor/bin/typo3 upgrade:run;
+          else echo "no TYPO3 installed yet";
+          fi
         service: cli
         shell: bash
     - run:
