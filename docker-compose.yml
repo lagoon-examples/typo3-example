@@ -6,8 +6,9 @@ x-volumes:
   &default-volumes
     # Define all volumes you would like to have real-time mounted into the docker containers
     volumes:
-      - ./public:/app/public:delegated 
-      - ./config:/app/config:delegated 
+       - ./public:/app/public:delegated
+       - ./config:/app/config:delegated
+      # - ./:/app:delegated
 
 x-environment:
   &default-environment
@@ -23,6 +24,18 @@ x-environment:
 volumes:
   db:
     {}
+  # assets:
+  #   labels:
+  #     lagoon.type: persistent
+  fileadmin:
+    labels:
+      lagoon.type: persistent
+  var:
+    labels:
+      lagoon.type: persistent
+  conf:
+    labels:
+      lagoon.type: persistent
 
 services:
 
@@ -33,9 +46,11 @@ services:
     image: *lagoon-project # this image will be reused as `CLI_IMAGE` in subsequent Docker builds
     labels:
       # Lagoon Labels
-      lagoon.type: cli-persistent
-      lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
-      lagoon.persistent: /app/web/content/uploads/ # location where the persistent storage should be mounted
+      lagoon.type: cli
+      # lagoon.volumes.assets.path: /app/public/_assets/
+      lagoon.volumes.fileadmin.path: /app/public/fileadmin/
+      lagoon.volumes.var.path: /app/public/var/
+      lagoon.volumes.conf.path: /app/public/typo3conf/
       lando.type: php-cli
     << : *default-volumes # loads the defined volumes from the top
     volumes_from: ### mount the ssh-agent from the pygmy or cachalot ssh-agent. Automatically removed in CI.
@@ -50,8 +65,11 @@ services:
       args:
         CLI_IMAGE: *lagoon-project # Inject the name of the cli image
     labels:
-      lagoon.type: nginx-php-persistent
-      lagoon.persistent: /app/web/content/uploads/ # define where the persistent storage should be mounted too
+      lagoon.type: nginx-php
+      # lagoon.volumes.assets.path: /app/public/_assets/
+      lagoon.volumes.fileadmin.path: /app/public/fileadmin/
+      lagoon.volumes.var.path: /app/public/var/
+      lagoon.volumes.conf.path: /app/public/typo3conf/
       lando.type: nginx  
     ports:
       - "8080"
@@ -71,9 +89,12 @@ services:
       args:
         CLI_IMAGE: *lagoon-project
     labels:
-      lagoon.type: nginx-php-persistent
+      lagoon.type: nginx-php
       lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon
-      lagoon.persistent: /app/web/content/uploads/ # define where the persistent storage should be mounted too
+      # lagoon.volumes.assets.path: /app/public/_assets/
+      lagoon.volumes.fileadmin.path: /app/public/fileadmin/
+      lagoon.volumes.var.path: /app/public/var/
+      lagoon.volumes.conf.path: /app/public/typo3conf/
       lando.type: php-fpm
     << : *default-volumes
     depends_on:
@@ -82,8 +103,8 @@ services:
       << : *default-environment # loads the defined environment variables from the top
 
 
-  mariadb:
-    image: uselagoon/mariadb-10.6:latest
+  database:
+    image: uselagoon/mariadb-10.11:latest
     labels:
       lagoon.type: mariadb
       lando.type: mariadb
@@ -93,6 +114,17 @@ services:
       << : *default-environment
     volumes:
       - db:/var/lib/mysql
+
+  lagoonlogs:
+    hostname: application-logs.lagoon.svc
+    image: mendhak/udp-listener
+    labels:
+      lagoon.type: none
+    environment:
+    - UDPPORT=5140
+    ports:
+    - "0.0.0.0:5140:5140"
+    - "0.0.0.0:5140:5140/udp"
 
 networks:
   amazeeio-network:

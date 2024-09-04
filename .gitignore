@@ -1,0 +1,6 @@
+vendor/
+.idea/
+public/_assets/
+public/fileadmin/
+public/typo3temp/
+var/

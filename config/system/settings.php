@@ -2,7 +2,7 @@
 return [
     'BE' => [
         'debug' => false,
-        'installToolPassword' => '$argon2i$v=19$m=65536,t=16,p=1$R2MzVEF4STJwRDZHZDJlZA$lxc5maElIB2zi19I9jVseIecNkzot4EaZIfgmPkoWXQ',
+        'installToolPassword' => '',
         'passwordHashing' => [
             'className' => 'TYPO3\\CMS\\Core\\Crypto\\PasswordHashing\\Argon2iPasswordHash',
             'options' => [],
@@ -12,16 +12,11 @@ return [
         'Connections' => [
             'Default' => [
                 'charset' => 'utf8mb4',
-                'dbname' => 'lagoon',
-                'driver' => 'pdo_mysql',
-                'host' => 'mariadb',
-                'password' => 'lagoon',
-                'port' => 3306,
+                'driver' => 'mysqli',
                 'tableoptions' => [
                     'charset' => 'utf8mb4',
                     'collate' => 'utf8mb4_unicode_ci',
                 ],
-                'user' => 'lagoon',
             ],
         ],
     ],
@@ -106,11 +101,11 @@ return [
         ],
         'devIPmask' => '',
         'displayErrors' => 0,
-        'encryptionKey' => '1e1f2abee50a7c310a2df8c2c32be0b9c579023659fba9240945eb978ff49f3d2bbff88ed43702b62a66e2e66d21b88c',
+        'encryptionKey' => '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
         'exceptionalErrors' => 4096,
-        'sitename' => 'New TYPO3 Project',
-        'systemMaintainers' => [
-            1,
+        'features' => [
+            'security.backend.enforceContentSecurityPolicy' => true,
+            'security.usePasswordPolicyForFrontendUsers' => true,
         ],
         'trustedHostsPattern' => '.*.*',
     ],
