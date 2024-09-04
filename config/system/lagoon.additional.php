@@ -8,13 +8,14 @@
 if(getenv("LAGOON") !== false) {
     // Set up mariadb connections
     $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['driver'] = 'mysqli';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = getenv('MARIADB_DATABASE') ?: 'lagoon';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host'] = getenv('MARIADB_HOST') ?: 'mariadb';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = getenv('MARIADB_PASSWORD') ?: 'lagoon';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'] = getenv('MARIADB_USERNAME') ?: 'lagoon';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['charset'] = getenv('MARIADB_CHARSET') ?: 'utf8mb4';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['tableoptions']['charset'] = getenv('MARIADB_CHARSET') ?: 'utf8mb4';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['tableoptions']['collate'] = getenv('MARIADB_COLLATION') ?: 'utf8mb4_general_ci';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host'] = getenv('DATABASE_HOST') ?: 'database';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['port'] = getenv('DATABASE_PORT') ?: '3306';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = getenv('DATABASE_DATABASE') ?: 'lagoon';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'] = getenv('DATABASE_USERNAME') ?: 'lagoon';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = getenv('DATABASE_PASSWORD') ?: 'lagoon';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['charset'] = getenv('DATABASE_CHARSET') ?: 'utf8mb4';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['tableoptions']['charset'] = getenv('DATABASE_CHARSET') ?: 'utf8mb4';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['tableoptions']['collate'] = getenv('DATABASE_COLLATION') ?: 'utf8mb4_general_ci';
 
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['displayErrors'] = '1';
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['trustedHostsPattern'] = '.*';

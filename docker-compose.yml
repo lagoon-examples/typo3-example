@@ -103,7 +103,7 @@ services:
       << : *default-environment # loads the defined environment variables from the top
 
 
-  mariadb:
+  database:
     image: uselagoon/mariadb-10.11:latest
     labels:
       lagoon.type: mariadb
