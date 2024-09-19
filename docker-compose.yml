@@ -24,18 +24,16 @@ x-environment:
 volumes:
   db:
     {}
-  # assets:
-  #   labels:
-  #     lagoon.type: persistent
   fileadmin:
     labels:
       lagoon.type: persistent
   var:
     labels:
       lagoon.type: persistent
-  conf:
+  typo3temp:
     labels:
       lagoon.type: persistent
+      lagoon.backup: false
 
 services:
 
@@ -47,10 +45,9 @@ services:
     labels:
       # Lagoon Labels
       lagoon.type: cli
-      # lagoon.volumes.assets.path: /app/public/_assets/
       lagoon.volumes.fileadmin.path: /app/public/fileadmin/
+      lagoon.volumes.typo3temp.path: /app/public/typo3temp/
       lagoon.volumes.var.path: /app/public/var/
-      lagoon.volumes.conf.path: /app/public/typo3conf/
       lando.type: php-cli
     << : *default-volumes # loads the defined volumes from the top
     volumes_from: ### mount the ssh-agent from the pygmy or cachalot ssh-agent. Automatically removed in CI.
@@ -66,10 +63,9 @@ services:
         CLI_IMAGE: *lagoon-project # Inject the name of the cli image
     labels:
       lagoon.type: nginx-php
-      # lagoon.volumes.assets.path: /app/public/_assets/
       lagoon.volumes.fileadmin.path: /app/public/fileadmin/
+      lagoon.volumes.typo3temp.path: /app/public/typo3temp/
       lagoon.volumes.var.path: /app/public/var/
-      lagoon.volumes.conf.path: /app/public/typo3conf/
       lando.type: nginx  
     ports:
       - "8080"
@@ -91,10 +87,9 @@ services:
     labels:
       lagoon.type: nginx-php
       lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon
-      # lagoon.volumes.assets.path: /app/public/_assets/
       lagoon.volumes.fileadmin.path: /app/public/fileadmin/
+      lagoon.volumes.typo3temp.path: /app/public/typo3temp/
       lagoon.volumes.var.path: /app/public/var/
-      lagoon.volumes.conf.path: /app/public/typo3conf/
       lando.type: php-fpm
     << : *default-volumes
     depends_on:
