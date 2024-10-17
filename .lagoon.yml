@@ -45,4 +45,4 @@ lagoon-sync:
       database: "${DB_DATABASE:-db}"
   files:
     config:
-      sync-directory: "/app/public/fileadmin"
+      sync-directory: "public/fileadmin"
