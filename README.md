@@ -10,15 +10,13 @@ This example contains the following services:
 * Typo3
 * PHP 8.3
 * NGINX
-* MariaDB 10.11
+* MySQL 8.0
 
 ## Important files
 * `./.lagoon.yml` 
 
 ## Settings
 
-In this example we're assuming we're running with a Mariadb database.
+In this example we're assuming we're running with a MySQL database.
 As such, if you look in the `config/system/additional.php` and `config/system/lagoon.additional.php` files you'll note that we dynamically set
-the Mariadb details.
-
-Furthermore, you'll notice that 
+the MySQL details.

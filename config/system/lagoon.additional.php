@@ -6,16 +6,16 @@
  */
 
 if(getenv("LAGOON") !== false) {
-    // Set up mariadb connections
+    // Set up mysqli connections
     $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['driver'] = 'mysqli';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host'] = getenv('DATABASE_HOST') ?: 'db';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['port'] = getenv('DATABASE_PORT') ?: '3306';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = getenv('DATABASE_DATABASE') ?: 'db';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'] = getenv('DATABASE_USERNAME') ?: 'db';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = getenv('DATABASE_PASSWORD') ?: 'db';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['charset'] = getenv('DATABASE_CHARSET') ?: 'utf8mb4';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['tableoptions']['charset'] = getenv('DATABASE_CHARSET') ?: 'utf8mb4';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['tableoptions']['collate'] = getenv('DATABASE_COLLATION') ?: 'utf8mb4_unicode_ci';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host'] = getenv('DB_HOST') ?: 'db';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['port'] = getenv('DB_PORT') ?: '3306';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = getenv('DB_DATABASE') ?: 'db';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'] = getenv('DB_USERNAME') ?: 'db';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = getenv('DB_PASSWORD') ?: 'db';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['charset'] = getenv('DB_CHARSET') ?: 'utf8mb4';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['tableoptions']['charset'] = getenv('DB_CHARSET') ?: 'utf8mb4';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['tableoptions']['collate'] = getenv('DB_COLLATION') ?: 'utf8mb4_unicode_ci';
 
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['displayErrors'] = '1';
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['trustedHostsPattern'] = '.*';
