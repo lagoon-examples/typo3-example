@@ -1,0 +1,130 @@
+x-lagoon-project:
+  # Lagoon project name (leave `&lagoon-project` when you edit this)
+  &lagoon-project typo3-example
+
+x-volumes:
+  &default-volumes
+    # Define all volumes you would like to have real-time mounted into the docker containers
+    volumes:
+       - ./public:/app/public:delegated
+       - ./config:/app/config:delegated
+      # - ./:/app:delegated
+
+x-environment:
+  &default-environment
+    LAGOON_PROJECT: *lagoon-project
+    # Route that should be used locally
+    LAGOON_ROUTE: &default-url http://${COMPOSE_PROJECT_NAME:-typo3-example}.docker.amazee.io
+    # Uncomment if you like to have the system behave like in production
+    #LAGOON_ENVIRONMENT_TYPE: production
+    # Uncomment to enable xdebug and then restart via `docker-compose up -d`
+    #XDEBUG_ENABLE: "true"
+    HTTP_HOST: *default-url
+
+volumes:
+  db:
+    {}
+  fileadmin:
+    labels:
+      lagoon.type: persistent
+  var:
+    labels:
+      lagoon.type: persistent
+  typo3temp:
+    labels:
+      lagoon.type: persistent
+      lagoon.backup: false
+
+services:
+
+  cli: # cli container, will be used for executing composer and any local commands (wpcli etc.)
+    build:
+      context: .
+      dockerfile: lagoon/cli.dockerfile
+    image: *lagoon-project # this image will be reused as `CLI_IMAGE` in subsequent Docker builds
+    labels:
+      # Lagoon Labels
+      lagoon.type: cli
+      lagoon.volumes.fileadmin.path: /app/public/fileadmin/
+      lagoon.volumes.typo3temp.path: /app/public/typo3temp/
+      lagoon.volumes.var.path: /app/public/var/
+      lando.type: php-cli
+    << : *default-volumes # loads the defined volumes from the top
+    volumes_from: ### mount the ssh-agent from the pygmy or cachalot ssh-agent. Automatically removed in CI.
+      - container:amazeeio-ssh-agent ### Local overrides to mount host SSH keys. Automatically removed in CI.
+    environment:
+      << : *default-environment # loads the defined environment variables from the top
+
+  nginx:
+    build:
+      context: .
+      dockerfile: lagoon/nginx.dockerfile
+      args:
+        CLI_IMAGE: *lagoon-project # Inject the name of the cli image
+    labels:
+      lagoon.type: nginx-php
+      lagoon.volumes.fileadmin.path: /app/public/fileadmin/
+      lagoon.volumes.typo3temp.path: /app/public/typo3temp/
+      lagoon.volumes.var.path: /app/public/var/
+      lando.type: nginx  
+    ports:
+      - "8080"
+    << : *default-volumes
+    depends_on:
+      - cli # basically just tells docker-compose to build the cli first
+    environment:
+      << : *default-environment # loads the defined environment variables from the top
+    networks:
+      - amazeeio-network
+      - default
+
+  php:
+    build:
+      context: .
+      dockerfile: lagoon/php.dockerfile
+      args:
+        CLI_IMAGE: *lagoon-project
+    labels:
+      lagoon.type: nginx-php
+      lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon
+      lagoon.volumes.fileadmin.path: /app/public/fileadmin/
+      lagoon.volumes.typo3temp.path: /app/public/typo3temp/
+      lagoon.volumes.var.path: /app/public/var/
+      lando.type: php-fpm
+    << : *default-volumes
+    depends_on:
+      - cli # basically just tells docker-compose to build the cli first
+    environment:
+      << : *default-environment # loads the defined environment variables from the top
+
+
+  db:
+    image: uselagoon/mysql-8.0:latest
+    labels:
+      lagoon.type: mariadb
+      lando.type: mariadb
+    ports:
+      - "3306" # exposes the port 3306 with a random local port, find it with `docker-compose port db 3306`
+    environment:
+      << : *default-environment
+      MYSQL_DATABASE: db
+      MYSQL_USER: db
+      MYSQL_PASSWORD: db
+
+    volumes:
+      - db:/var/lib/mysql
+
+  lagoonlogs:
+    hostname: application-logs.lagoon.svc
+    image: mendhak/udp-listener
+    labels:
+      lagoon.type: none
+    environment:
+    - UDPPORT=5140
+    ports:
+    - "0.0.0.0:5140:5140"
+    - "0.0.0.0:5140:5140/udp"
+
+networks:
+  amazeeio-network:
+    external: true

@@ -1,0 +1,48 @@
+docker-compose-yaml: docker-compose.yml
+
+project: typo3-example
+
+tasks:
+  post-rollout:
+    - run:
+        name: Lock backend
+        command: vendor/bin/typo3 backend:lock
+        service: cli
+        shell: bash
+    - run:
+        name: Update DB
+        command: vendor/bin/typo3 database:updateschema "*" --verbose
+        service: cli
+        shell: bash
+    - run:
+        name: Cache Flush
+        command: vendor/bin/typo3 cache:flush
+        service: cli
+        shell: bash
+    - run:
+        name: Run pending upgrades
+        command: vendor/bin/typo3 upgrade:run
+        service: cli
+        shell: bash
+    - run:
+        name: Warmup cache
+        command: vendor/bin/typo3 cache:warmup
+        service: cli
+        shell: bash
+    - run:
+        name: Unlock backend
+        command: vendor/bin/typo3 backend:unlock
+        service: cli
+        shell: bash
+
+lagoon-sync:
+  mariadb:
+    config:
+      hostname: "${DB_HOST:-db}"
+      username: "${DB_USERNAME:-db}"
+      password: "${DB_PASSWORD:-db}"
+      port: "${DB_PORT:-3306}"
+      database: "${DB_DATABASE:-db}"
+  files:
+    config:
+      sync-directory: "public/fileadmin"
