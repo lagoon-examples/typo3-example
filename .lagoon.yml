@@ -38,11 +38,11 @@ tasks:
 lagoon-sync:
   mariadb:
     config:
-      hostname: "${DATABASE_HOST:-database}"
-      username: "${DATABASE_USERNAME:-lagoon}"
-      password: "${DATABASE_PASSWORD:-lagoon}"
+      hostname: "${DATABASE_HOST:-db}"
+      username: "${DATABASE_USERNAME:-db}"
+      password: "${DATABASE_PASSWORD:-db}"
       port: "${DATABASE_PORT:-3306}"
-      database: "${DATABASE_DATABASE:-lagoon}"
+      database: "${DATABASE_DATABASE:-db}"
   files:
     config:
-      sync-directory: "/app/public/fileadmin/user_upload"
+      sync-directory: "/app/public/fileadmin"

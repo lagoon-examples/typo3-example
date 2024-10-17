@@ -98,15 +98,19 @@ services:
       << : *default-environment # loads the defined environment variables from the top
 
 
-  database:
-    image: uselagoon/mariadb-10.11:latest
+  db:
+    image: uselagoon/mysql-8.0:latest
     labels:
       lagoon.type: mariadb
       lando.type: mariadb
     ports:
-      - "3306" # exposes the port 3306 with a random local port, find it with `docker-compose port mariadb 3306`
+      - "3306" # exposes the port 3306 with a random local port, find it with `docker-compose port db 3306`
     environment:
       << : *default-environment
+      MYSQL_DATABASE: db
+      MYSQL_USER: db
+      MYSQL_PASSWORD: db
+
     volumes:
       - db:/var/lib/mysql
 
